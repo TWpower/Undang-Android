@@ -27,7 +27,7 @@ matrix:
 
   - language: node_js
     install :
-      - npm install appium --chromedriver_version="2.33"
+      - CHROMEDRIVER_VERSION=2.20 npm install appium
       - npm install appium-doctor
     script:
       - appium-doctor
@@ -36,7 +36,7 @@ matrix:
 
   - language: python
     python :
-      - "3.6"
+      - "3.6.1"
     install:
       - pip install -r requirements.txt
     script:

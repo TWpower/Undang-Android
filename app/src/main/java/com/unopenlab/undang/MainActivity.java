@@ -9,7 +9,7 @@ import android.webkit.WebView;
 public class MainActivity extends AppCompatActivity {
 
     private WebView mMainWebView;
-    private static final String MAIN_URL = "http://undang.twpower.me:6231/";
+    private static final String MAIN_URL = "https://undang.twpower.me";
 
 
     @SuppressLint("JavascriptInterface")

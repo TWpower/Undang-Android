@@ -22,8 +22,10 @@ android:
     - sys-img-armeabi-v7a-android-24
 # Emulator Management: Create, Start and Wait
 before_install:
-  - npm install appium
-  - npm install appium-doctor
+  - sudo apt-get install node
+  - sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev
+  - git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+  - git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 before_script:
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &

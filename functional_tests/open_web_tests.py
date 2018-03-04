@@ -21,8 +21,24 @@ driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 # 웹뷰를 가져옵니다.
 driver.switch_to.context('WEBVIEW')
 
-# 가볍게 테스트를 해봅니다.
 def test_mainpage_has_text():
 	time.sleep(15)
+
+	# 첫 페이지에 들어갔을 때
+	# '지금 한강은'이라는게 화면에 나와있고
 	assert '지금 한강은' in driver.page_source
+
+	# 온도를 봤는데 요청한 값과 같게 나온다.
+	import urllib.request
+	request = urllib.request.Request('https://undang.twpower.me/temperatures')
+	response = urllib.request.urlopen(request)
+	import json
+	result_in_json = json.loads(response.read().decode('utf-8'))
+	api_temperature = result_in_json['구리']
+
+	html_temperature = driver.find_element_by_id('temperature').text
+	print("\n\n\n" + html_temperature + "\n\n\n")
+
+	assert api_temperature == html_temperature
+
 	driver.close_app();

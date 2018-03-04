@@ -59,7 +59,7 @@ before_install:
   # run appium-doctor
   - ./node_modules/.bin/appium-doctor
   # run appium server
-  - ./node_modules/.bin/appium > appium_log.txt
+  - ./node_modules/.bin/appium --log-level info
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a

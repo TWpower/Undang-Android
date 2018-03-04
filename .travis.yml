@@ -22,8 +22,9 @@ android:
     - sys-img-armeabi-v7a-android-24
 # Emulator Management: Create, Start and Wait
 before_install:
+  - sudo apt-get update
   # install node and appium
-  - sudo apt-get install node
+  - sudo apt-get install nodejs
   - node -v
   # install pyenv
   - sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev

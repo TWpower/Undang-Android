@@ -51,6 +51,8 @@ before_install:
   - sudo apt-get install build-essential
   - nodejs -v
   - node -v
+  # add JAVA_HOME/bin PATH 
+  - PATH=$PATH:$JAVA_HOME/bin
   # install appium(locally)
   - npm install appium
   - npm install appium-doctor

@@ -51,13 +51,13 @@ before_install:
   - sudo apt-get install build-essential
   - nodejs -v
   - node -v
-  # install appium
-  - npm install appium
-  - npm install appium-doctor
+  # install appium(locally)
+  - npm install -g appium
+  - npm install -g appium-doctor
   # run appium-doctor
-  - ~/node_modules/.bin/appium-doctor
+  - appium-doctor
   # run appium server
-  - ~/node_modules/.bin/appium &
+  -appium &
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a

@@ -68,4 +68,4 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - pytest
+  - ~/.pyenv/versions/3.6.1/envs/undang/bin/pytest

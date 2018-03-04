@@ -21,6 +21,9 @@ android:
     - sys-img-armeabi-v7a-android-22
     - sys-img-armeabi-v7a-android-24
 # Emulator Management: Create, Start and Wait
+before_install:
+  - npm install appium
+  - npm install appium-doctor
 before_script:
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-window &

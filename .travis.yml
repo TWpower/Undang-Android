@@ -59,7 +59,7 @@ before_install:
   # run appium-doctor
   - ./node_modules/.bin/appium-doctor
   # run appium server
-  - ./node_modules/.bin/appium &
+  - ./node_modules/.bin/appium &> appium_log.txt
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
@@ -68,4 +68,4 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ~/.pyenv/versions/3.6.1/envs/undang/bin/pytest
+  - pytest

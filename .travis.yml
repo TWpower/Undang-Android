@@ -41,10 +41,15 @@ before_install:
   - pyenv virtualenv 3.6.1 undang
   # activate virtualenv
   - pyenv activate undang
+  # check python version
+  - python -V
+  # install packages
+  - pip install -r requirements.txt
   # install node
-  - sudo apt-get install nodejs
-  - sudo apt-get install npm
+  - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+  - sudo apt-get install build-essential
   - nodejs -v
+  - node -v
 
 before_script:
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a

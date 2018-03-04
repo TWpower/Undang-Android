@@ -57,7 +57,7 @@ before_install:
   # run appium-doctor
   - appium-doctor
   # run appium server
-  -appium &
+  - appium &
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a

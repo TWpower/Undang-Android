@@ -52,12 +52,12 @@ before_install:
   - nodejs -v
   - node -v
   # install appium(locally)
-  - npm install -g appium
-  - npm install -g appium-doctor
+  - npm install appium
+  - npm install appium-doctor
   # run appium-doctor
-  - appium-doctor
+  - ./node_modules/.bin/appium-doctor
   # run appium server
-  - appium &
+  - ./node_modules/.bin/appium &
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a

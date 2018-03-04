@@ -23,9 +23,6 @@ android:
 # Emulator Management: Create, Start and Wait
 before_install:
   - sudo apt-get update
-  # install node and appium
-  - sudo apt-get install nodejs
-  - node -v
   # install pyenv
   - sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev
   - git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -37,6 +34,18 @@ before_install:
   - echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
   # reload .bash_profile
   - source ~/.bash_profile
+  # install python
+  - pyenv versions
+  - pyenv install 3.6.1
+  # make virtualenv
+  - pyenv virtualenv 3.6.1 undang
+  # activate virtualenv
+  - pyenv activate undang
+  # install node
+  - sudo apt-get install nodejs
+  - sudo apt-get install npm
+  - nodejs -v
+
 before_script:
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-window &

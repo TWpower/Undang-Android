@@ -44,7 +44,7 @@ before_install:
   # check python version
   - python -V
   # install packages
-  - pip install --user -r requirements.txt
+  - pip install -r requirements.txt
   # install node
   - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
   - sudo apt-get install nodejs

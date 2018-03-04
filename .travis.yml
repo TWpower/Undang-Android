@@ -52,11 +52,12 @@ before_install:
   - nodejs -v
   - node -v
   # install appium
-  - npm install appium --chromedriver_version="2.33"
+  - npm install appium
   - npm install appium-doctor
   # run appium-doctor
-  - appium-doctor
-  - appium &
+  - ~/node_modules/.bin/appium-doctor
+  # run appium server
+  - ~/node_modules/.bin/appium &
 
 before_script:
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a

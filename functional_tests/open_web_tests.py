@@ -1,34 +1,32 @@
-# Android environment
 import pytest
 from appium import webdriver
 import os
 import time
 
-# 아래 필요한 정보들을 기입해 줍니다.
-# 안드로이드 버전은 5.1로 하였습니다.
 desired_caps = {}
 desired_caps['platformName'] = 'Android'
 desired_caps['platformVersion'] = '5.1'
 desired_caps['deviceName'] = 'Android Emulator'
-# 아래 테스트하고자 하는 app의 apk경로를 넣어줍니다.
+
+# app path setting
 dir = os.path.dirname(__file__)
-filename = os.path.join(dir, '../app/debug/app-debug.apk')
+filename = os.path.join(dir, '../app/build/outputs/apk/debug/app-debug.apk')
 desired_caps['app'] = filename
 
-# appium이 돌아가고 있는 서버의 http 주소를 입력해줍니다.
-# 현재를 local에서 실행하고 있기 때문에 아래처럼 작성하였습니다.
-driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-# 웹뷰를 가져옵니다.
-driver.switch_to.context('WEBVIEW')
 
 def test_mainpage_has_text():
 	time.sleep(15)
 
-	# 첫 페이지에 들어갔을 때
-	# '지금 한강은'이라는게 화면에 나와있고
+	# 태우가 앱을 실행했을 때
+	driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+
+	# 웹뷰 화면이 나왔다.
+	driver.switch_to.context('WEBVIEW')
+
+	# '지금 한강은'이라는게 화면에 나와있었고
 	assert '지금 한강은' in driver.page_source
 
-	# 온도를 봤는데 요청한 값과 같게 나온다.
+	# 그 아래에서 온도를 확인할 수 있었다.
 	import urllib.request
 	request = urllib.request.Request('https://undang.twpower.me/temperatures')
 	response = urllib.request.urlopen(request)
@@ -41,4 +39,5 @@ def test_mainpage_has_text():
 
 	assert api_temperature == html_temperature
 
+	# 온도를 확인하고 앱을 종료하였다.
 	driver.close_app();

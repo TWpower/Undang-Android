@@ -68,4 +68,8 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
+  - ./gradlew assemble
   - pytest
+
+after_script:
+  - cat ./appium_log.txt

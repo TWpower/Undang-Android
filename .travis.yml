@@ -47,8 +47,12 @@ before_install:
   - pip install --user -r requirements.txt
   # install node
   - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+  - sudo apt-get install nodejs
   - sudo apt-get install build-essential
   - nodejs -v
+  - node -v
+  - npm install appium
+  - npm install appium-doctor
 
 before_script:
   - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a

@@ -3,73 +3,55 @@ sudo: required
 jdk: oraclejdk8
 android:
   components:
-    - tools
-    - platform-tools
-    # The BuildTools version used by your project
-    - build-tools-26.0.2
-    # The SDK version used to compile your project
-    - android-26
-    - android-22
-    - android-24
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-26
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-22
-    - sys-img-armeabi-v7a-android-24
-# Emulator Management: Create, Start and Wait
+  - tools
+  - platform-tools
+  - build-tools-26.0.2
+  - android-26
+  - android-22
+  - android-24
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-26
+  - sys-img-armeabi-v7a-android-22
+  - sys-img-armeabi-v7a-android-24
 before_install:
-  - sudo apt-get update
-  # install pyenv
-  - sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev
-  - git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-  - echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
-  - echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
-  - echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
-  # install virtualenv
-  - git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-  - echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
-  # reload .bash_profile
-  - source ~/.bash_profile
-  # install python
-  - pyenv versions
-  - pyenv install 3.6.1
-  # make virtualenv
-  - pyenv virtualenv 3.6.1 undang
-  # activate virtualenv
-  - pyenv activate undang
-  # check python version
-  - python -V
-  # install packages
-  - pip install -r requirements.txt
-  # install node
-  - curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
-  - sudo apt-get install nodejs
-  - sudo apt-get install build-essential
-  - nodejs -v
-  - node -v
-  # add JAVA_HOME/bin PATH 
-  - PATH=$PATH:$JAVA_HOME/bin
-  # install appium(locally)
-  - npm install appium
-  - npm install appium-doctor
-  # run appium-doctor
-  - ./node_modules/.bin/appium-doctor
-  # run appium server
-  - ./node_modules/.bin/appium --log-level info > appium_log.txt &
-
+- sudo apt-get update
+- sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev
+  libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev
+- git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+- echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+- echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+- echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+- git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+- echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
+- source ~/.bash_profile
+- pyenv versions
+- pyenv install 3.6.1
+- pyenv virtualenv 3.6.1 undang
+- pyenv activate undang
+- python -V
+- pip install -r requirements.txt
+- curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+- sudo apt-get install nodejs
+- sudo apt-get install build-essential
+- nodejs -v
+- node -v
+- PATH=$PATH:$JAVA_HOME/bin
+- npm install appium
+- npm install appium-doctor
+- "./node_modules/.bin/appium-doctor"
+- "./node_modules/.bin/appium --log-level info > appium_log.txt &"
 before_script:
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
-
+- echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+- emulator -avd test -no-skin -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 script:
-  - ./gradlew assemble
-  - pytest
-
+- "./gradlew assemble"
+- pytest
 after_script:
-  - cat ./appium_log.txt
+- cat ./appium_log.txt
+notifications:
+  slack:
+    secure: ITIofBJxcTDfcd6fzrrmFTduiKk4REc4SfrL2mpJTUlPAo7IEI11qyRsUMWnqplIILdRdP0pQUVnC2rcXOxO9vZkNQdSObNNqtd5gLFpl449m6VuTZncW7dWVofMHa6lmLLsExD59ZsEBGg/yEGqYCcXjApUnZk7TVNMLbA4yR9WlUAiyAnSlCt3c4JdocjpBbQSFtEYlr3K3v+ZtXDX+pCDIYLyyU8+j1WTBZoUey3v2GWdFOh23Zog+Izc4e793szGoja9x8pFr22FxGG/EKLlDlB9YP4hcVH58fK2xwY2Vd3qkBc1UTNaVJrj5jSyrzibs6mgU/x4GzRfw42QjmK32PmPVfULEqGwl2Apnb0Csx9HRyYauLiSxRH9/cEU29vFmOnUcMUr2P00DpEx30Lr1WuZruKDjBIhFgiW8GVF7UbhESEkN0CNwpS9LEc6cGFq4ExLFcOyoUsyQrAJx8uIL6ibc3xszxeO614dxVrUqEqQYBr4KfEhGmlJznDbGenRWbKPyH7tqFWo+L132dK6MxdyrxRF64melDMxTqxowPKFXKjc/v/8P+vBpv5Tn5D9cGW1EiKNTBBBgjSWVSI3h5zRbi+g0z2t8/3lRybxlDxvPurduBTob1YVpUGIASSadGhpj1wRG/JhkDO6UcChYpLtg7Zwo8t/fZGFwug=
